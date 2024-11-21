@@ -3,3 +3,4 @@ __pycache__
 Food101/data/
 .idea/
 artifacts/
+.food101/
