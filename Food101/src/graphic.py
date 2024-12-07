@@ -36,7 +36,7 @@ class customGUI(object):
             resizeY = min(600, imagePixmap.height())
             imagePixmap = imagePixmap.scaled(resizeX, resizeY, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.imageLabel.setPixmap(imagePixmap)
-        self.Window.resize(imagePixmap.width(), imagePixmap.height() + 100)
+        self.Window.setFixedSize(imagePixmap.width() + 21, imagePixmap.height() + 91)
 
 
     def analyzeButtonFunction(self):
