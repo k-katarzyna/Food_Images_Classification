@@ -31,6 +31,10 @@ class customGUI(object):
 
     def updateImage(self):
         imagePixmap = QtGui.QPixmap(self.photoPath)
+        if imagePixmap.width()>600 or imagePixmap.height()>600:
+            resizeX = min(600, imagePixmap.width())
+            resizeY = min(600, imagePixmap.height())
+            imagePixmap = imagePixmap.scaled(resizeX, resizeY, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.imageLabel.setPixmap(imagePixmap)
         self.Window.resize(imagePixmap.width(), imagePixmap.height() + 100)
 
