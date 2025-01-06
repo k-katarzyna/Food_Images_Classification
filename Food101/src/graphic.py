@@ -14,7 +14,7 @@ class customGUI(object):
         self.imageLabel.setObjectName("imageLabel")
         self.windowGrid.addWidget(self.imageLabel, 0, 0, 1, 1)
 
-        self.photoPath = path.dirname(__file__) + "/../noPhoto.png"
+        self.photoPath = path.dirname(__file__) + "/../images/noPhoto.png"
         self.updateImage()
         
         self.analyzeButton = QtWidgets.QPushButton(Window)
