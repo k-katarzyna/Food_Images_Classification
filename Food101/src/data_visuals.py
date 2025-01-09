@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 
 def view_10_random_images(dataset, label_names, target_classes=None):
@@ -37,5 +38,17 @@ def view_10_random_images(dataset, label_names, target_classes=None):
         ax[i].axis("off")
         if target_classes is None or len(target_classes) > 1:
             ax[i].set_title(label_names[label].replace("_", " "))
+    plt.tight_layout()
+    plt.show()
+
+
+def show_saved_fig(paths, suptitle=None):
+    fig, ax = plt.subplots(len(paths), 1, figsize=(14, len(paths)*5))
+    if suptitle:
+        plt.suptitle(suptitle)
+    for i, path in enumerate(paths):
+        img = mpimg.imread(path)
+        ax[i].imshow(img)
+        ax[i].axis("off")
     plt.tight_layout()
     plt.show()
