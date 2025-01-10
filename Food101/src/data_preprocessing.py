@@ -3,6 +3,7 @@ import tensorflow as tf
 
 rotation_layer = tf.keras.layers.RandomRotation(factor=(-0.2, 0.2))
 
+
 def augment_function(image, label):
 
     image = rotation_layer(image)
@@ -26,3 +27,22 @@ def augment_function(image, label):
     image = tf.image.random_contrast(image, lower=1, upper=1.1)
 
     return image, label
+
+
+def load_and_prep_image(filename, img_shape=224):
+    """
+    Reads in an image from filename, turns it into a tensor and reshapes into
+    (224, 224, 3).
+    
+    Args:
+    filename (str): string filename of target image
+    img_shape (int): size to resize target image to, default 224
+
+    Returns:
+    Tensor of shape (1, img_shape, img_shape, 3)
+    """
+    img = tf.io.read_file(filename)
+    img = tf.io.decode_image(img, channels=3)
+    img = tf.image.resize(img, [img_shape, img_shape])
+    img = tf.expand_dims(img, axis=0)
+    return img

@@ -3,9 +3,17 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
+from tensorflow.keras import mixed_precision
 from tensorflow.keras import layers, callbacks
 from tensorflow.keras.applications import EfficientNetV2S, MobileNetV3Large
 from tensorflow.keras.mixed_precision import LossScaleOptimizer
+
+policy = mixed_precision.Policy('mixed_float16')
+mixed_precision.set_global_policy(policy)
+
+IMG_SIZE = 224
+INITIAL_EPOCHS = 3
+NUM_CLASSES = 101
 
 
 def build_feature_extraction_model(base_model_class, input_shape=(IMG_SIZE, IMG_SIZE, 3),
@@ -131,7 +139,7 @@ def test_models(models_config, train_data, validation_data, test_data, num_class
     return results.sort_values(by="Test accuracy", ascending=False)
 
 
-def build_model_for_fine_tuning(base_model_class, input_shape=(IMG_SIZE, IMG_SIZE, 3), num_classes=NUM_CLASSES, unfreezed_layers=None):
+def build_model_for_fine_tuning(base_model_class, input_shape=(IMG_SIZE, IMG_SIZE, 3), num_classes=NUM_CLASSES, unfrozen_layers=None):
     """
     Args:
         base_model_class: A class for the base model (e.g., tf.keras.applications.MobileNet).
@@ -150,9 +158,9 @@ def build_model_for_fine_tuning(base_model_class, input_shape=(IMG_SIZE, IMG_SIZ
         
     base_model.trainable = False
 
-    unfreezed_layers = unfreezed_layers if unfreezed_layers else 10
+    unfrozen_layers = unfrozen_layers if unfrozen_layers else 10
     
-    for layer in base_model.layers[-unfreezed_layers:]:
+    for layer in base_model.layers[-unfrozen_layers:]:
         if isinstance(layer, tf.keras.layers.BatchNormalization):
             layer.trainable = False
         else:
@@ -207,14 +215,14 @@ def compare_histories(name, original_history_history_dict, new_history, test_nam
 
 
 def fine_tune_models(test_name, train_data, model_list=[EfficientNetV2S, MobileNetV3Large], add_epochs=22, learning_rate=1e-04,
-                     load_previous_weights=True, initial_epoch=0, unfreezed_layers=None):
+                     load_previous_weights=False, initial_epoch=0, unfrozen_layers=None):
 
     results = []
 
     for model_class in model_list:
     
         name = model_class.__name__
-        model = build_model_for_fine_tuning(model_class, unfreezed_layers=unfreezed_layers)
+        model = build_model_for_fine_tuning(model_class, unfrozen_layers=unfrozen_layers)
 
         checkpoint_callback = callbacks.ModelCheckpoint(f'checkpoints/{name}_{test_name}.keras',
                                     monitor='val_loss',
