@@ -13,19 +13,18 @@ MODEL = tf.keras.models.load_model("fine_tuned_model.keras")
 
 def make_prediction(img_filename, model=MODEL, label_names=LABEL_NAMES, ax=None):
     """
-    Predicts the class of an image using a given model. Optionally returns a matplotlib axis.
+    Predict the class of an image using a keras model.
 
     Args:
-    img_filename (str): Path to the image file.
-    model (tf.keras.Model): Pre-trained model to use for prediction.
-    label_names (list): List of label names corresponding to model output.
-    return_ax (bool): If True, return the matplotlib axis with the image and title.
-                      If False, return the prediction string.
+        img_filename (str): Path to the image file to be classified.
+        model (tf.keras.Model): A model to use for prediction.
+        label_names (list): List of label names corresponding to model output indices.
+        ax (Optional[matplotlib.axes.Axes]): Matplotlib axis to plot the image with its prediction.
+            If provided, the image will be displayed with the predicted label.
 
     Returns:
-    str or matplotlib.axes.Axes:
-        - If `return_ax=False`: The predicted label as a string.
-        - If `return_ax=True`: A matplotlib axis object with the image and title.
+        str or None: Predicted label name as a string if `ax` is None. Otherwise, the image
+            with prediction is displayed on the given axis and nothing is returned.
     """
     img = load_and_prep_image(img_filename)
     predictions = model.predict(img, verbose=0)
@@ -37,6 +36,5 @@ def make_prediction(img_filename, model=MODEL, label_names=LABEL_NAMES, ax=None)
         ax.imshow(img_np)
         ax.axis("off")
         ax.set_title(prediction, fontsize=16)
-        return None
     else:
         return prediction
