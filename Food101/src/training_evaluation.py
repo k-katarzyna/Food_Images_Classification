@@ -8,6 +8,7 @@ from tensorflow.keras import layers, callbacks
 from tensorflow.keras.applications import EfficientNetV2S, MobileNetV3Large
 from tensorflow.keras.mixed_precision import LossScaleOptimizer
 
+
 policy = mixed_precision.Policy('mixed_float16')
 mixed_precision.set_global_policy(policy)
 
@@ -214,7 +215,8 @@ def compare_histories(name, original_history_history_dict, new_history, test_nam
     plt.show()
 
 
-def fine_tune_models(test_name, train_data, model_list=[EfficientNetV2S, MobileNetV3Large], add_epochs=22, learning_rate=1e-04,
+def fine_tune_models(test_name, train_data, validation_data, test_data,
+                     model_list=[EfficientNetV2S, MobileNetV3Large], add_epochs=22, learning_rate=1e-04,
                      load_previous_weights=False, initial_epoch=0, unfrozen_layers=None):
 
     results = []
