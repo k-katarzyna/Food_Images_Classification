@@ -11,6 +11,7 @@ class PredictionDialog(QtWidgets.QMessageBox):
             self.existingDialog.deleteLater()
             self.existingDialog = None
 
+        super().__init__()
         self.existingDialog = self
         self.setIcon(QtWidgets.QMessageBox.Information)
         self.setStandardButtons(QtWidgets.QMessageBox.Ok)
