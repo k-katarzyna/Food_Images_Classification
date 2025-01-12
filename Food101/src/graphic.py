@@ -1,6 +1,7 @@
 from sys import exit
 from os import path
 from PyQt5 import QtCore, QtGui, QtWidgets
+from use_model import make_prediction
 
 class customGUI(object):
     photoPath = ""
@@ -40,7 +41,7 @@ class customGUI(object):
 
 
     def analyzeButtonFunction(self):
-        print("analyze")
+        print(make_prediction(self.photoPath))
 
 
     def importButtonFunction(self):
