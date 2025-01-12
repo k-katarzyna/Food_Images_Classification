@@ -3,6 +3,21 @@ from os import path
 from PyQt5 import QtCore, QtGui, QtWidgets
 from use_model import make_prediction
 
+class PredictionDialog(QtWidgets.QMessageBox):
+    existingDialog = None
+
+    def __init__(self, msg):
+        if self.existingDialog != None:
+            self.existingDialog.deleteLater()
+            self.existingDialog = None
+
+        self.existingDialog = self
+        self.setIcon(QtWidgets.QMessageBox.Information)
+        self.setStandardButtons(QtWidgets.QMessageBox.Ok)
+
+        self.setWindowTitle("Image Prediction")
+        self.setText(msg)
+
 class customGUI(object):
     photoPath = ""
 
@@ -41,8 +56,9 @@ class customGUI(object):
 
 
     def analyzeButtonFunction(self):
-        print(make_prediction(self.photoPath))
-
+        prediction = make_prediction(self.photoPath)
+        print(prediction)
+        PredictionDialog(prediction).exec()
 
     def importButtonFunction(self):
         result = QtWidgets.QFileDialog.getOpenFileName(
