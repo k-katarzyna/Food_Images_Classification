@@ -37,7 +37,7 @@ class customGUI(object):
         
         self.imageLabel = QtWidgets.QLabel(Window)
         self.imageLabel.setObjectName("imageLabel")
-        self.windowGrid.addWidget(self.imageLabel, 0, 0, 1, 1)
+        self.windowGrid.addWidget(self.imageLabel, 0, 0, 1, 1, alignment=QtCore.Qt.AlignCenter)
 
         self.photoPath = path.dirname(__file__) + "/../images/noPhoto.png"
         self.updateImage()
