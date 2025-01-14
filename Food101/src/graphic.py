@@ -18,9 +18,14 @@ class PredictionDialog(QtWidgets.QMessageBox):
 
         self.setWindowTitle("Image Prediction")
         self.setText(msg)
-        font = QtCore.Qfont()
-        font.setWeight(18)
-        self.setFont(font)
+        font_text = QtGui.QFont()
+        font_text.setPointSize(40)
+        self.setFont(font_text)
+
+        font_btn = QtGui.QFont()
+        font_btn.setPointSize(12)
+        self.findChild(QtWidgets.QPushButton).setFont(font_btn)
+
 
 class customGUI(object):
     photoPath = ""
