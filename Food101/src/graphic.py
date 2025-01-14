@@ -1,7 +1,8 @@
 from sys import exit
 from os import path
 from PyQt5 import QtCore, QtGui, QtWidgets
-from use_model import make_prediction
+from .use_model import make_prediction
+
 
 class PredictionDialog(QtWidgets.QMessageBox):
     existingDialog = None
@@ -77,8 +78,6 @@ class customGUI(object):
     def connectSignals(self):
         self.analyzeButton.clicked.connect(self.analyzeButtonFunction)
         self.importButton.clicked.connect(self.importButtonFunction)
-
-
 
 
 class CustomWindow(QtWidgets.QWidget, customGUI):
