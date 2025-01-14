@@ -56,7 +56,7 @@ class customGUI(object):
 
     def updateImage(self):
         imagePixmap = QtGui.QPixmap(self.photoPath)
-        imagePixmap = imagePixmap.scaled(780, 780, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        imagePixmap = imagePixmap.scaled(775, 775, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.imageLabel.setPixmap(imagePixmap)
 
     def analyzeButtonFunction(self):
