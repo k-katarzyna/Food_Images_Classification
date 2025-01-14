@@ -56,13 +56,8 @@ class customGUI(object):
 
     def updateImage(self):
         imagePixmap = QtGui.QPixmap(self.photoPath)
-        if imagePixmap.width()>600 or imagePixmap.height()>600:
-            resizeX = min(600, imagePixmap.width())
-            resizeY = min(600, imagePixmap.height())
-            imagePixmap = imagePixmap.scaled(resizeX, resizeY, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        imagePixmap = imagePixmap.scaled(780, 780, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.imageLabel.setPixmap(imagePixmap)
-        self.Window.setFixedSize(imagePixmap.width() + 21, imagePixmap.height() + 91)
-
 
     def analyzeButtonFunction(self):
         prediction = make_prediction(self.photoPath)
@@ -91,7 +86,7 @@ class CustomWindow(QtWidgets.QWidget, customGUI):
         super().__init__(parent)
         # self.setObjectName("rootWindow")
         self.setWindowTitle("Food Detector")
-        # self.resize(300, 400)
+        self.setFixedSize(800, 900)
         self.setupUi(self)
         self.connectSignals()
 
