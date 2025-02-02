@@ -1,4 +1,5 @@
 from joblib import load
+from typing import List, Optional
 from warnings import filterwarnings
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +12,11 @@ LABEL_NAMES = load("data/true_names.pkl")
 MODEL = tf.keras.models.load_model("fine_tuned_model.keras")
 
 
-def make_prediction(img_filename, model=MODEL, label_names=LABEL_NAMES, ax=None):
+def make_prediction(img_filename: str,
+                    model: tf.keras.Model = MODEL,
+                    label_names: List = LABEL_NAMES,
+                    ax: Optional[plt.Axes] = None
+                   ) -> Optional[str]:
     """
     Predict the class of an image using a keras model.
 
